@@ -14,7 +14,7 @@ TEST_FILE ?= tests/unit_tests/
 UV_FROZEN = true
 
 test tests:
-	uv run --group test pytest -n auto --disable-socket --allow-unix-socket $(TEST_FILE)
+	uv run --group test pytest --disable-socket --allow-unix-socket $(TEST_FILE)
 
 test_watch:
 	uv run --group test ptw --snapshot-update --now . -- -x --disable-socket --allow-unix-socket --disable-warnings tests/unit_tests

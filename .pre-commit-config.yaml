@@ -4,6 +4,6 @@ repos:
       - id: open-mre
         name: format and lint open-mre
         language: system
-        entry: make -C open_mre format lint
+        entry: make format lint
         files: ^open_mre/
         pass_filenames: false

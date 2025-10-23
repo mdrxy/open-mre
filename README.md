@@ -1,16 +1,25 @@
 # `open-mre`
 
-Automated system for validating Minimal Reproducible Examples (MREs) from bug reports.
+[Deep agent](https://docs.langchain.com/oss/python/deepagents/overview) used to validate Minimal Reproducible Examples (MREs) from incoming issues.
 
 ## Overview
 
-`open-mre` receives markdown issue reports, extracts and executes the code, and produces either a runnable, validated reproduction or requests additional context from the author.
+`open-mre` receives bug reports, extracts and executes the MRE, and produces either a runnable, validated reproduction (w/ batteries included) for maintainers, or requests additional context from the author. See the [design doc](./IMPLEMENTATION_SPEC.md) for more details and the [architecture section](#architecture).
 
-## Technology Stack
+## Stack
 
-- **Framework**: [Deep Agents](https://github.com/langchain-ai/deepagents) (LangChain and LangGraph-based agent orchestration)
-- **Code Execution**: Provider tools (Claude/OpenAI Code Execution)
-- **Architecture**: Coordinator agent with specialized subagents
+- [Deep Agents](https://github.com/langchain-ai/deepagents) (LangChain and LangGraph-based agent orchestration)
+- Daytona sandbox for code execution
+
+## Installation
+
+```bash
+uv sync
+
+# Copy environment template and configure
+cp .env.example .env
+# Substitute .env with your API keys
+```
 
 ## Usage
 
@@ -18,17 +27,37 @@ Automated system for validating Minimal Reproducible Examples (MREs) from bug re
 open-mre path/to/issue.md
 ```
 
-This will:
+This:
 
-1. Extract code from the bug report
-2. Validate package versions
-3. Execute the code
-4. Generate a validation report
+1. Extracts code from the bug report
+   1. Validate package versions, if specified (if an issue is opened against legacy versions, the problem may have been fixed in later releases)
+2. Execute the code, hydrating with any missing imports or environment setup/entrypoint
+3. Report back findings
+
+The CLI shows real-time progress updates as each node executes and is viewable in LangSmith.
+
+### Passing Environment Variables to Sandbox
+
+If the code being tested requires API keys or other environment variables, you can pass them from your host environment to the Daytona sandbox for use when executing the MRE:
+
+```bash
+# Pass one or more environment variables
+open-mre issue.md -e OPENAI_API_KEY ANTHROPIC_API_KEY DATABASE_URL
+```
 
 ## Output
 
-- `validation_report.md`: Validation results with status (GREEN/YELLOW/RED)
-- `reproduction.py`: Runnable reproduction script (if successful)
+Generated files are saved to `outputs/`:
+
+- `outputs/validation_report.md`: Validation results with status (`✅ GREEN`/`🟡 YELLOW`/`❌ RED`)
+- `outputs/reproduction.py`: Runnable reproduction script (if successful) for maintainers
+
+Metadata and intermediate files:
+
+- `outputs/execution_results.json`: Raw execution output and metadata
+- `outputs/extracted_code.py`: Code extracted from the bug report
+- `outputs/version_report.json`: Package version validation results
+- `outputs/behavior_analysis.json`: Expected vs actual behavior analysis
 
 ## Architecture
 
