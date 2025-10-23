@@ -70,3 +70,7 @@ The system uses a coordinator agent that delegates to five specialized subagents
 5. **Report Generator**: Creates final validation reports
 
 See `IMPLEMENTATION_SPEC.md` for detailed technical specifications.
+
+## Acknowledgements
+
+@bracesproul for inspiring the [name](https://github.com/langchain-ai/open-swe)
