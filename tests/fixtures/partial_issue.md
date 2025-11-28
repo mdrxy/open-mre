@@ -2,7 +2,7 @@
 
 ## Description
 
-Getting a weird error when trying to convert DataFrame column to int.
+Getting a weird error when trying to convert `DataFrame` column to int.
 
 ## Expected Behavior
 
@@ -10,7 +10,7 @@ Should convert to integer without error.
 
 ## Actual Behavior
 
-Raises ValueError
+Raises `ValueError`
 
 ## Code to Reproduce
 

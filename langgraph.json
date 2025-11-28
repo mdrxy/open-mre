@@ -1,7 +1,0 @@
-{
-  "dependencies": ["."],
-  "graphs": {
-    "mre_coordinator": "./open_mre/coordinator.py:graph"
-  },
-  "env": ".env"
-}
