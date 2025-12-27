@@ -2,3 +2,6 @@
 .langgraph_api
 .mypy_cache
 outputs/
+validation_report.md
+draft_comments.md
+reproduction.py

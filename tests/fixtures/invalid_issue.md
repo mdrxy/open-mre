@@ -1,17 +1,28 @@
-# Bug: Something Doesn't Work
+# Bug: Division by Zero Error
 
 ## Description
 
-My code doesn't work. Please help!
+When dividing by zero, Python should raise a `ZeroDivisionError`, but the error message is unclear.
 
 ## Expected Behavior
 
-It should work.
+Should raise `ZeroDivisionError: division by zero`
 
 ## Actual Behavior
 
-It doesn't work.
+Raises `ZeroDivisionError: division by zero`
+
+## Code to Reproduce
+
+```python
+def divide(a, b):
+    return a / b
+
+result = divide(10, 0)
+print(result)
+```
 
 ## Environment
 
-- Python
+- Python 3.11
+- No external dependencies

@@ -1,9 +1,8 @@
 """Tests for custom tools."""
 
-import os
 from unittest.mock import MagicMock, patch
 
-from open_mre.tools import check_pypi_version, execute_python_code
+from open_mre.tools import check_pypi_version
 
 
 def test_check_pypi_version_success() -> None:

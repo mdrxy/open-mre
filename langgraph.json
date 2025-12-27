@@ -1,0 +1,8 @@
+{
+  "dependencies": ["."],
+  "graphs": {
+    "mre_validator": "./open_mre/server.py:graph"
+  },
+  "env": ".env",
+  "python_version": "3.11"
+}
