@@ -12,7 +12,16 @@ def check_pypi_version(package_name: str) -> dict[str, str | None]:
         package_name: Name of Python package (e.g., `'requests'`)
 
     Returns:
-        `{"package": "requests", "latest_version": "2.31.0", "error": null}`
+        A dictionary with the latest version or an error message.
+
+    Example:
+        ```python
+        result = check_pypi_version("requests")
+        print(result)
+        ```
+        ```python
+        {"package": "requests", "latest_version": "2.31.0", "error": null}
+        ```
     """
     try:
         response = httpx.get(
@@ -21,7 +30,9 @@ def check_pypi_version(package_name: str) -> dict[str, str | None]:
             follow_redirects=True,
         )
         response.raise_for_status()
+
         data = response.json()
+
         return {
             "package": package_name,
             "latest_version": data["info"]["version"],
